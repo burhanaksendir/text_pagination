@@ -37,15 +37,23 @@ class _MyHomePageState extends State<MyHomePage> {
   int currentPage = 0;
   double fontSize = 26.0;
 
+  @override
+  void initState() {
+    _incrementCounter();
+    super.initState();
+  }
+
   void _incrementCounter() async {
     rawText = await rootBundle.loadString('assets/Lorem ipsum.txt');
     double height = MediaQueryData.fromWindow(window).size.height;
     double padding = MediaQueryData.fromWindow(window).padding.top +
-        MediaQueryData.fromWindow(window).padding.bottom + 204.0;
+        MediaQueryData.fromWindow(window).padding.bottom +
+        204.0;
     height -= padding;
     double width = MediaQueryData.fromWindow(window).size.width;
     setState(() {
-      isDone = Pagination.setPage(rawText, height, width, 'Roboto', fontSize, 3.0, 1.5);
+      isDone = Pagination.setPage(rawText, height, width, 'Roboto', fontSize,
+          3.0, 1.5, TextDirection.rtl);
     });
   }
 
@@ -64,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Pagination.pageText(currentPage),
                       style: TextStyle(
                           fontSize: fontSize, letterSpacing: 3.0, height: 1.5),
+                      textDirection: TextDirection.rtl,
                     )
                   : Text(
                       'Loading...',
@@ -84,7 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       setState(() {
                         isDone = false;
                         fontSize = 26.0;
-                        isDone = Pagination.setStyle('Roboto', fontSize, 3.0, 1.5);
+                        isDone = Pagination.setStyle(
+                            'Roboto', fontSize, 3.0, 1.5, TextDirection.rtl);
                       });
                     }),
                 IconButton(
@@ -96,7 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       setState(() {
                         isDone = false;
                         fontSize = 32.0;
-                        isDone = Pagination.setStyle('Roboto', fontSize, 3.0, 1.5);
+                        isDone = Pagination.setStyle(
+                            'Roboto', fontSize, 3.0, 1.5, TextDirection.rtl);
                       });
                     }),
               ],
@@ -144,11 +155,6 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.last_page),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
     );
   }
