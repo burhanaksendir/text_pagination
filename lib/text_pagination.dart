@@ -14,7 +14,7 @@ class Pagination {
   static double _letterSpacig = 3.0;
   static double _height = 1.5;
 
-  static int pageLength()  {
+  static int pageLength() {
     return _textIdx.length;
   }
 
@@ -24,12 +24,21 @@ class Pagination {
     return _rawText.substring(start, end);
   }
 
-  static bool setStyle(String font, double fSize, double lSpacing, double fHeight) {
-    return setPage(_rawText, _pageHeight, _pageWidth, font, fSize, lSpacing, fHeight);
+  static bool setStyle(String font, double fSize, double lSpacing,
+      double fHeight, TextDirection textDirection) {
+    return setPage(_rawText, _pageHeight, _pageWidth, font, fSize, lSpacing,
+        fHeight, textDirection);
   }
 
-  static bool setPage(String text, double pgHeight, double pgWidth,
-      String font, double fSize, double lSpacing, double fHeight) {
+  static bool setPage(
+      String text,
+      double pgHeight,
+      double pgWidth,
+      String font,
+      double fSize,
+      double lSpacing,
+      double fHeight,
+      TextDirection textDirection) {
     _rawText = text;
     _textIdx.clear();
 
@@ -41,7 +50,7 @@ class Pagination {
     _height = fHeight;
 
     TextPainter textPainter = TextPainter(
-        textDirection: TextDirection.ltr,
+        textDirection: textDirection,
         textScaleFactor: MediaQueryData.fromWindow(window).textScaleFactor);
 
     textPainter.text = TextSpan(
@@ -77,7 +86,8 @@ class Pagination {
           yield i;
         }
 
-        if (text[i].contains(new RegExp(r'[A-Za-z0-9 ,.<>/?!@#$%^&*()-_=+\\|]'))) {
+        if (text[i]
+            .contains(new RegExp(r'[A-Za-z0-9 ,.<>/?!@#$%^&*()-_=+\\|]'))) {
           lineText += 0.5;
         } else
           lineText += 1;
